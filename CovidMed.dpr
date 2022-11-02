@@ -23,7 +23,9 @@ uses
   GlobalDataUnit in 'MainUnits\GlobalDataUnit.pas' {dmGlobalData: TDataModule},
   CovidMedMainUnit in 'MainUnits\CovidMedMainUnit.pas' {fmCovidMedMain},
   PationUnit in 'Units\PationUnit.pas' {fmPationUnit},
-  PriyomUnit in 'Units\PriyomUnit.pas' {fmPriyom};
+  PriyomUnit in 'Units\PriyomUnit.pas' {fmPriyom},
+  SelectUnit in 'Units\SelectUnit.pas' {fmSelect},
+  SelectPationUnit in 'Units\SelectPationUnit.pas' {fmSelectPation};
 
 {$R *.res}
 

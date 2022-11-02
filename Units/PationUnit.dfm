@@ -1,6 +1,6 @@
 inherited fmPationUnit: TfmPationUnit
-  Left = 330
-  Top = 359
+  Left = 531
+  Top = 457
   Caption = #1057#1087#1080#1089#1086#1082' '#1087#1072#1094#1110#1077#1085#1090#1110#1074
   PixelsPerInch = 96
   TextHeight = 13

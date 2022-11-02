@@ -7,11 +7,6 @@ uses
   ZSqlUpdate, DataUnit, SimpleDialog, DateUtils, UtilsUnit;
 
 type
-  TStore = record
-     id: integer;
-     storeType: integer;
-     period: TDateTime;
-  end;
   
   TdmGlobalData = class(TDataModule)
     zqrAny: TZQuery;
@@ -53,9 +48,6 @@ type
 
 var
   dmGlobalData: TdmGlobalData;
-  FStore: TStore;
-  function CheckDate(dd: TDateTime): Boolean;
-
 
 implementation
 
@@ -64,23 +56,7 @@ implementation
 uses Forms, Math, ConstUnit, Variants, StrUtils, DBGridEh, DBCtrlsEh{,
      FileCtrl};
 
-function CheckDate(dd: TDateTime): Boolean;
-begin
-   Result:=True;
-   if dd < FStore.period then
-   begin
 
-       ShowErrorDlg('Вы выбрали дату из предыдущего месяца. Документ не будет создан!');
-       Result:=False;
-   end;
-   if dd > EndOfTheMonth(FStore.period) then
-   begin
-
-       ShowErrorDlg('Вы выбрали дату из следуйщего месяца. Документ не будет создан!');
-       Result:=False;
-   end;
-
-end;
 
 function TdmGlobalData.ClearCash(const ARef : integer): Boolean;
 var i : Integer;
