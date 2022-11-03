@@ -48,6 +48,11 @@ inherited fmCovidMedMain: TfmCovidMedMain
       Caption = #1055#1086#1095#1072#1090#1080' '#1085#1086#1074#1080#1081' '#1087#1088#1080#1081#1086#1084
       OnExecute = actPriyomExecute
     end
+    object actArchive: TAction
+      Category = '2_'#1055#1088#1080#1081#1086#1084
+      Caption = #1040#1088#1093#1110#1074' '#1055#1088#1080#1081#1086#1084#1110#1074
+      OnExecute = actArchiveExecute
+    end
   end
   inherited ilChildIcon: TImageList
     Left = 480

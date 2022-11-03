@@ -25,7 +25,8 @@ uses
   PationUnit in 'Units\PationUnit.pas' {fmPationUnit},
   PriyomUnit in 'Units\PriyomUnit.pas' {fmPriyom},
   SelectUnit in 'Units\SelectUnit.pas' {fmSelect},
-  SelectPationUnit in 'Units\SelectPationUnit.pas' {fmSelectPation};
+  SelectPationUnit in 'Units\SelectPationUnit.pas' {fmSelectPation},
+  ArchiveUnit in 'Units\ArchiveUnit.pas' {fmArchive};
 
 {$R *.res}
 
