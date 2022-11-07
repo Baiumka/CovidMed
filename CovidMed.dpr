@@ -26,7 +26,11 @@ uses
   PriyomUnit in 'Units\PriyomUnit.pas' {fmPriyom},
   SelectUnit in 'Units\SelectUnit.pas' {fmSelect},
   SelectPationUnit in 'Units\SelectPationUnit.pas' {fmSelectPation},
-  ArchiveUnit in 'Units\ArchiveUnit.pas' {fmArchive};
+  ArchiveUnit in 'Units\ArchiveUnit.pas' {fmArchive},
+  MedicalUnit in 'Units\MedicalUnit.pas' {fmMedical},
+  PationEditUnit in 'Units\PationEditUnit.pas' {fmPationEdit},
+  SicksUnit in 'Units\SicksUnit.pas' {fmSicks},
+  RiskUnit in 'Units\RiskUnit.pas' {fmRisk};
 
 {$R *.res}
 

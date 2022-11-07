@@ -20,37 +20,4 @@ object dmGlobalData: TdmGlobalData
     Left = 392
     Top = 16
   end
-  object dsAmpuSettings: TDataSource
-    DataSet = zqrAmpuSettings
-    Left = 144
-    Top = 120
-  end
-  object zqrAmpuSettings: TZQuery
-    SQL.Strings = (
-      'SELECT * FROM goods_k.p_get_ampu_settings(:bank_id, :dt);')
-    Params = <
-      item
-        DataType = ftUnknown
-        Name = 'bank_id'
-        ParamType = ptUnknown
-      end
-      item
-        DataType = ftUnknown
-        Name = 'dt'
-        ParamType = ptUnknown
-      end>
-    Left = 256
-    Top = 120
-    ParamData = <
-      item
-        DataType = ftUnknown
-        Name = 'bank_id'
-        ParamType = ptUnknown
-      end
-      item
-        DataType = ftUnknown
-        Name = 'dt'
-        ParamType = ptUnknown
-      end>
-  end
 end

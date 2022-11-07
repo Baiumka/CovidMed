@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, TableUnit, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset,
   ImgList, ActnList, DBNewNav, Grids, DBGridEh, StdCtrls, Mask, DBCtrlsEh,
-  Buttons, ExtCtrls, ZSqlUpdate, SimpleDialog, ConstUnit, DBCtrls;
+  Buttons, ExtCtrls, ZSqlUpdate, SimpleDialog, ConstUnit, DBCtrls, PationEditUnit;
 
 type
   TfmPationUnit = class(TfmSimpleTable)
@@ -14,6 +14,7 @@ type
     procedure FormDestroy(Sender: TObject);
     function GetSQByDataSet(DataSet: TDataSet): String; override;
     procedure nwTableBeforeAction(Sender: TObject; Button: TNavigateBtn);
+    procedure dbgTableDblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -42,7 +43,7 @@ begin
      inherited;
    finally
      fmPationUnit := nil;
-   end;
+  end;
 end;
 
 function TfmPationUnit.GetSQByDataSet(DataSet: TDataSet): String;
@@ -55,6 +56,8 @@ end;
 
 procedure TfmPationUnit.nwTableBeforeAction(Sender: TObject;
   Button: TNavigateBtn);
+var
+  dwEdit : TfmPationEdit;
 begin
   if Button = nbDelete then
   begin
@@ -63,6 +66,29 @@ begin
       Abort;
     end;
   end;
+  if Button = nbInsert then
+  begin
+     dwEdit := TfmPationEdit.Create(Self, 0);
+     dwEdit.ShowModal;
+     Abort;
+  end;
+
+  if Button = nbEdit then
+  begin
+     dwEdit := TfmPationEdit.Create(Self, zqrTable.FieldByName('id').AsInteger);
+     dwEdit.ShowModal;
+     Abort;
+  end;
+
+end;
+
+procedure TfmPationUnit.dbgTableDblClick(Sender: TObject);
+var
+  dwEdit : TfmPationEdit;
+begin
+     dwEdit := TfmPationEdit.Create(Self, zqrTable.FieldByName('id').AsInteger);
+     dwEdit.ShowModal;
+     Abort;
 
 end;
 

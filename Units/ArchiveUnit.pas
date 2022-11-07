@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, TableUnit, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset,
   ImgList, ActnList, DBNewNav, Grids, DBGridEh, StdCtrls, Mask, DBCtrlsEh,
-  Buttons, ExtCtrls, ConstUnit;
+  Buttons, ExtCtrls, ConstUnit, PriyomUnit, ClientUnit;
 
 type
   TfmArchive = class(TfmSimpleTable)
@@ -14,8 +14,11 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure dbgTableDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumnEh; State: TGridDrawState);
+    procedure dbgTableDblClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
+    function InserEditRow(aMode : TEditMode): Boolean;
   public
     { Public declarations }
   end;
@@ -56,5 +59,38 @@ begin
 end;
 
 
+
+procedure TfmArchive.dbgTableDblClick(Sender: TObject);
+begin
+   InserEditRow(emModify);
+end;
+
+function TfmArchive.InserEditRow(aMode : TEditMode): Boolean;
+var act : TAction;
+    fmTemp : TfmPriyom;
+    index: integer;
+begin
+  act := TAction(FMaster.GetModuleAction('fmPriyom'));
+  if Assigned(act) and act.Execute then
+  begin
+    fmTemp := fmPriyom;
+    if Assigned(fmTemp) then
+    begin
+      FEditMode        := aMode;
+      FEditRec.mode    := Integer(FEditMode);
+      if aMode = emInsert then
+        FEditRec.id := 0
+      else
+        FEditRec.id := zqrTable.FieldByName(API_ID).AsInteger;
+        fmTemp.SendParams('OPEN', @FEditRec, zqrTable.FieldByName('pt_id').AsInteger);
+    end;
+  end;
+  Result := True;
+end;
+
+procedure TfmArchive.FormActivate(Sender: TObject);
+begin
+   actRefresh.Execute;
+end;
 
 end.

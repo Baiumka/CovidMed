@@ -14,10 +14,16 @@ type
     actPations: TAction;
     actPriyom: TAction;
     actArchive: TAction;
+    actMedical: TAction;
+    actSicks: TAction;
+    actRisk: TAction;
     procedure actUsersExecute(Sender: TObject);
     procedure actPationsExecute(Sender: TObject);
     procedure actPriyomExecute(Sender: TObject);
     procedure actArchiveExecute(Sender: TObject);
+    procedure actMedicalExecute(Sender: TObject);
+    procedure actSicksExecute(Sender: TObject);
+    procedure actRiskExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -31,7 +37,8 @@ var
 
 implementation
 
-uses  Math, PationUnit, PriyomUnit, ArchiveUnit;
+uses  Math, PationUnit, PriyomUnit, ArchiveUnit, MedicalUnit, SicksUnit,
+  RiskUnit;
 
 
 {$R *.dfm}
@@ -55,7 +62,22 @@ end;
 
 procedure TfmCovidMedMain.actArchiveExecute(Sender: TObject);
 begin
-  CreateAndShowChildForm(TForm(fmArchive), TfmArchive, TAction(Sender).Caption);;
+  CreateAndShowChildForm(TForm(fmArchive), TfmArchive, TAction(Sender).Caption);
+end;
+
+procedure TfmCovidMedMain.actMedicalExecute(Sender: TObject);
+begin
+  CreateAndShowChildForm(TForm(fmMedical), TfmMedical, TAction(Sender).Caption);
+end;
+
+procedure TfmCovidMedMain.actSicksExecute(Sender: TObject);
+begin
+  CreateAndShowChildForm(TForm(fmSicks), TfmSicks, TAction(Sender).Caption);
+end;
+
+procedure TfmCovidMedMain.actRiskExecute(Sender: TObject);
+begin
+  CreateAndShowChildForm(TForm(fmRisk), TfmRisk, TAction(Sender).Caption);
 end;
 
 end.

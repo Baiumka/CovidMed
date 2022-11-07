@@ -4,7 +4,7 @@ interface
 
 uses
   SysUtils, Classes, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, InterfaceUnit,
-  ZSqlUpdate, DataUnit, SimpleDialog, DateUtils, UtilsUnit;
+  ZSqlUpdate, DataUnit, SimpleDialog, DateUtils, UtilsUnit, ComCtrls;
 
 type
   
@@ -12,8 +12,6 @@ type
     zqrAny: TZQuery;
     zuqEmpty: TZUpdateSQL;
     zqrCashKeyItem: TZQuery;
-    dsAmpuSettings: TDataSource;
-    zqrAmpuSettings: TZQuery;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -42,7 +40,7 @@ type
     procedure SetDateParam(Param : TParam; Value : Variant);
 
     procedure DefaultItemList(Sender : TObject; const ASQL : string; AFieldName : string = '');
-
+    procedure FillTree(zqrHistory : TDataSet; tvTree: TTreeView);
     function UserInfo : TUserInfo;
  end;
 
@@ -56,6 +54,42 @@ implementation
 uses Forms, Math, ConstUnit, Variants, StrUtils, DBGridEh, DBCtrlsEh{,
      FileCtrl};
 
+procedure TdmGlobalData.FillTree(zqrHistory : TDataSet; tvTree: TTreeView);
+var
+   a_id: integer;
+  headNode: TTreeNode;
+  askNode: TTreeNode;
+  priNode: TTreeNode;
+  nodeText: string;
+begin
+     a_id := 0;
+     zqrHistory.First;
+     while not zqrHistory.Eof do
+     begin
+       if a_id <> zqrHistory.FieldByName('ask_id').AsInteger then
+       begin
+         a_id := zqrHistory.FieldByName('ask_id').AsInteger;
+         headNode := TTreeNode.Create(tvTree.Items);
+         nodeText := 'Звернення №' + IntToStr(a_id) + ' Дата: ' + DateToStr(zqrHistory.FieldByName('ask_date').AsDateTime);
+         askNode := tvTree.Items.Add(headNode, nodeText);
+       end;
+
+       nodeText := 'Прийом №' + IntToStr(zqrHistory.FieldByName('pri_id').AsInteger) + ' Дата: ' + DateToStr(zqrHistory.FieldByName('pri_date').AsDateTime);
+       priNode := tvTree.Items.AddChild(askNode, nodeText);
+
+       nodeText := 'Лікар: ' + zqrHistory.FieldByName('doc_fio').AsString;
+       tvTree.Items.AddChild(priNode, nodeText);
+       nodeText := 'Скарги: ' + zqrHistory.FieldByName('pri_trouble').AsString;
+       tvTree.Items.AddChild(priNode, nodeText);
+       nodeText := 'Лікування: ' + zqrHistory.FieldByName('pri_heal').AsString;
+       tvTree.Items.AddChild(priNode, nodeText);
+       nodeText := 'Результат: ' + zqrHistory.FieldByName('pri_result').AsString;
+       tvTree.Items.AddChild(priNode, nodeText);
+
+       zqrHistory.Next;
+     end;
+
+end;
 
 
 function TdmGlobalData.ClearCash(const ARef : integer): Boolean;

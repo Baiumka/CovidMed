@@ -1,7 +1,7 @@
-inherited fmPationUnit: TfmPationUnit
-  Left = 531
-  Top = 457
-  Caption = #1057#1087#1080#1089#1086#1082' '#1087#1072#1094#1110#1077#1085#1090#1110#1074
+inherited fmSicks: TfmSicks
+  Left = 578
+  Top = 423
+  Caption = #1057#1087#1080#1089#1086#1082' '#1079#1072#1093#1074#1086#1088#1102#1074#1072#1085#1100
   PixelsPerInch = 96
   TextHeight = 13
   inherited lblTableTitle: TLabel
@@ -21,63 +21,53 @@ inherited fmPationUnit: TfmPationUnit
     Width = 784
     Height = 429
     Align = alClient
-    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgRowSelect, dgConfirmDelete]
-    ReadOnly = True
-    OnDblClick = dbgTableDblClick
     Columns = <
       item
         Color = clInfoBk
         EditButtons = <>
         FieldName = 'id'
         Footers = <>
+        ReadOnly = True
         Title.Caption = #8470
         Title.TitleButton = True
-        Width = 70
+        Width = 50
       end
       item
         EditButtons = <>
-        FieldName = 'fio'
+        FieldName = 'code'
         Footers = <>
-        Title.Caption = #1055'. '#1030'. '#1041'.'
-        Title.TitleButton = True
-        Width = 300
-      end
-      item
-        EditButtons = <>
-        FieldName = 'phone'
-        Footers = <>
-        Title.Caption = #1058#1077#1083#1077#1092#1086#1085
+        Title.Caption = #1050#1086#1076' '#1052#1050#1061'-10 '
         Title.TitleButton = True
         Width = 100
       end
       item
         EditButtons = <>
-        FieldName = 'reg_date'
+        FieldName = 'name'
         Footers = <>
-        Title.Caption = #1044#1072#1090#1072' '#1088#1077#1108#1089#1090#1088#1072#1094#1110#1111
-        Width = 100
+        Title.Caption = #1053#1072#1079#1074#1072' '#1079#1072#1093#1074#1086#1088#1102#1074#1072#1085#1085#1103
+        Title.TitleButton = True
+        Width = 400
       end>
   end
   inherited nwTable: TDBNewNav
-    Left = 103
+    Left = 95
     Top = 4
     Hints.Strings = ()
-    BeforeAction = nwTableBeforeAction
   end
   inherited alBase: TActionList
-    Left = 448
+    Left = 552
     Top = 0
   end
   inherited ilBase: TImageList
-    Left = 488
+    Left = 584
     Top = 0
   end
   inherited zqrTable: TZQuery
-    Left = 648
-    Top = 392
+    Left = 416
+    Top = 0
   end
   inherited dsTable: TDataSource
-    Left = 592
-    Top = 392
+    Left = 456
+    Top = 0
   end
 end

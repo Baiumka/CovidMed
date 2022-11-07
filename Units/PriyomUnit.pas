@@ -40,8 +40,10 @@ type
   private
     { Private declarations }
     procedure SavePriyom();
+    procedure LoadPriyom(pID: Integer; pationID: Integer);
   public
     { Public declarations }
+    function SendParams(const AKey: string; const ARecord: Pointer; const pationID: Integer): Boolean;
   end;
 
 var
@@ -57,9 +59,9 @@ uses GlobalDataUnit;
 procedure TfmPriyom.FormCreate(Sender: TObject);
 begin
   inherited;
-  AutoRefresh := False;
+  AutoRefresh := True;
   zqrPation.SQL.Text := 'SELECT * FROM ' + SCHEME_NAME +'.pation WHERE id = :id';
-  zqrPriyom.SQL.Text := 'SELECT * FROM ' + SCHEME_NAME +'.p_get_new_priyom_by_pation(:id_pation, :id_user);';
+  zqrPriyom.SQL.Text := 'SELECT * FROM ' + SCHEME_NAME +'.p_get_new_priyom_by_pation(:id, :id_pation, :id_user);';
   zqrHistory.SQL.Text := 'SELECT * FROM ' + SCHEME_NAME +'.p_get_pation_history(:id_pation);';
 end;
 
@@ -121,56 +123,8 @@ end;
 
 
 procedure TfmPriyom.btnStartClick(Sender: TObject);
-var
-  a_id: integer;
-  headNode: TTreeNode;
-  askNode: TTreeNode;
-  priNode: TTreeNode;
-  nodeText: string;
-
 begin
-  zqrPriyom.ParamByName('id_pation').AsInteger := zqrPation.FieldByName('id').AsInteger;
-  zqrPriyom.ParamByName('id_user').AsInteger := dmGlobalData.UserInfo().id;
-  if FMaster.GetData(zqrPriyom) then
-  begin
-     grpPationInfo.Visible := True;
-     grpPationInfo.Enabled := True;
-     pgcPriyom.Visible := True;
-     pgcPriyom.Enabled := True;
-     btnSave.Visible := True;
-     btnSave.Enabled := True;
-     zqrHistory.ParamByName('id_pation').AsInteger := zqrPation.FieldByName('id').AsInteger;
-     FMaster.GetData(zqrHistory);
-     a_id := 0;
-     zqrHistory.First;
-     while not zqrHistory.Eof do
-     begin
-       if a_id <> zqrHistory.FieldByName('ask_id').AsInteger then
-       begin
-         headNode := TTreeNode.Create(tvPriyom.Items);
-         nodeText := 'Звернення №' + IntToStr(a_id) + ' Дата: ' + DateToStr(zqrHistory.FieldByName('ask_date').AsDateTime);
-         askNode := tvPriyom.Items.Add(headNode, nodeText);
-         a_id := zqrHistory.FieldByName('ask_id').AsInteger;
-       end;
-
-       nodeText := 'Прийом №' + IntToStr(zqrHistory.FieldByName('pri_id').AsInteger) + ' Дата: ' + DateToStr(zqrHistory.FieldByName('pri_date').AsDateTime);
-       priNode := tvPriyom.Items.AddChild(askNode, nodeText);
-
-       nodeText := 'Лікар: ' + zqrHistory.FieldByName('doc_fio').AsString;
-       tvPriyom.Items.AddChild(priNode, nodeText);
-       nodeText := 'Скарги: ' + zqrHistory.FieldByName('pri_trouble').AsString;
-       tvPriyom.Items.AddChild(priNode, nodeText);
-       nodeText := 'Лікування: ' + zqrHistory.FieldByName('pri_heal').AsString;
-       tvPriyom.Items.AddChild(priNode, nodeText);
-       nodeText := 'Результат: ' + zqrHistory.FieldByName('pri_result').AsString;
-       tvPriyom.Items.AddChild(priNode, nodeText);
-
-       zqrHistory.Next;
-     end;
-     btnStart.Enabled := false;
-     is_started := true;
-  end;
-
+  LoadPriyom(0, zqrPation.ParamByName('id').AsInteger);
 end;
 
 procedure TfmPriyom.btnSaveClick(Sender: TObject);
@@ -190,16 +144,49 @@ begin
                                    ':trouble,' + #13#10 +
                                    ':heal,' + #13#10 +
                                    ':result,' + #13#10 +
-                                   ':is_end' + #13#10 +
+                                   ':is_health' + #13#10 +
                                    ')';
    dmGlobalData.zqrAny.ParamByName('id').AsInteger := zqrPriyom.FieldByName('id').AsInteger;
    dmGlobalData.zqrAny.ParamByName('trouble').Value := zqrPriyom.FieldByName('trouble').Value;
    dmGlobalData.zqrAny.ParamByName('result').Value := zqrPriyom.FieldByName('result').Value;
    dmGlobalData.zqrAny.ParamByName('heal').Value := zqrPriyom.FieldByName('heal').Value;
-   dmGlobalData.zqrAny.ParamByName('is_end').AsBoolean := chkHealth.Checked;
+   dmGlobalData.zqrAny.ParamByName('is_health').AsBoolean := chkHealth.Checked;
    FMaster.GetData(dmGlobalData.zqrAny, false);
 end;
 
+function TfmPriyom.SendParams(const AKey: string; const ARecord: Pointer; const pationID: Integer): Boolean;
+var PRec : ^TEditRec;
+    vDataSet: TDataSet;
+    i: integer;
+begin
+  inherited SendParams(AKey,ARecord);
+  if AKey = 'OPEN' then
+  begin
+    PRec := ARecord;
+    LoadPriyom(PRec.id, pationID);
+  end;
+end;
 
+procedure TfmPriyom.LoadPriyom(pID: Integer; pationID: Integer);
+begin
+  zqrPriyom.ParamByName('id').AsInteger := pID;
+  zqrPriyom.ParamByName('id_pation').AsInteger := pationID;
+  zqrPriyom.ParamByName('id_user').AsInteger := dmGlobalData.UserInfo().id;
+  if FMaster.GetData(zqrPriyom) then
+  begin
+     grpPationInfo.Visible := True;
+     grpPationInfo.Enabled := True;
+     pgcPriyom.Visible := True;
+     pgcPriyom.Enabled := True;
+     btnSave.Visible := True;
+     btnSave.Enabled := True;
+     zqrHistory.ParamByName('id_pation').AsInteger := pationID;
+     FMaster.GetData(zqrHistory);
+     dmGlobalData.FillTree(zqrHistory, tvPriyom);
+     btnStart.Enabled := false;
+     is_started := true;
+  end;
+
+end;
 
 end.

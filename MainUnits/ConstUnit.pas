@@ -368,6 +368,11 @@ const
 
 // Справочники
   RFR_ALL = 0;
+  RFR_OBLAST = 1;
+
+  KW_OBLAST = 'OblastKey';
+
+  QR_OBLAST_NAME = 'SELECT id, name FROM ' + SCHEME_NAME + '.oblast';
 
   DEF_LNG = 2;
 

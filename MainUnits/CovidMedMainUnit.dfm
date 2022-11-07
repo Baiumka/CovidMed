@@ -53,6 +53,21 @@ inherited fmCovidMedMain: TfmCovidMedMain
       Caption = #1040#1088#1093#1110#1074' '#1055#1088#1080#1081#1086#1084#1110#1074
       OnExecute = actArchiveExecute
     end
+    object actMedical: TAction
+      Category = '1_'#1044#1086#1074#1110#1076#1085#1080#1082#1080
+      Caption = #1051#1110#1082#1072#1088#1089#1100#1082#1110' '#1079#1072#1089#1086#1073#1080
+      OnExecute = actMedicalExecute
+    end
+    object actSicks: TAction
+      Category = '1_'#1044#1086#1074#1110#1076#1085#1080#1082#1080
+      Caption = #1047#1072#1093#1074#1086#1088#1102#1074#1072#1085#1085#1103
+      OnExecute = actSicksExecute
+    end
+    object actRisk: TAction
+      Category = '1_'#1044#1086#1074#1110#1076#1085#1080#1082#1080
+      Caption = #1060#1072#1082#1090#1086#1088#1080' '#1088#1080#1079#1080#1082#1091
+      OnExecute = actRiskExecute
+    end
   end
   inherited ilChildIcon: TImageList
     Left = 480

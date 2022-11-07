@@ -1,6 +1,6 @@
 inherited fmPriyom: TfmPriyom
-  Left = 622
-  Top = 298
+  Left = 721
+  Top = 352
   Caption = #1055#1088#1080#1081#1086#1084
   PixelsPerInch = 96
   TextHeight = 13
@@ -95,7 +95,7 @@ inherited fmPriyom: TfmPriyom
         Left = 0
         Top = 247
         Width = 55
-        Height = 14
+        Height = 13
         Caption = #1056#1077#1079#1091#1083#1100#1090#1072#1090':'
       end
       object edtTrouble: TDBEditEh
