@@ -159,13 +159,14 @@ inherited fmPationEdit: TfmPationEdit
     Height = 25
     Caption = #1047#1073#1077#1088#1077#1075#1090#1080
     TabOrder = 7
+    OnClick = btnSaveClick
     Kind = bkOK
   end
   object edtBirthday: TDBDateTimeEditEh [15]
     Left = 120
     Top = 120
     Width = 553
-    Height = 25
+    Height = 21
     DataField = 'birth_date'
     DataSource = dsPation
     EditButtons = <>
@@ -231,7 +232,7 @@ inherited fmPationEdit: TfmPationEdit
       Left = 8
       Top = 24
       Width = 43
-      Height = 17
+      Height = 13
       Caption = #1054#1073#1083#1072#1089#1090#1100
     end
     object lbl3: TLabel
@@ -325,6 +326,7 @@ inherited fmPationEdit: TfmPationEdit
     Height = 17
     Caption = #1053#1045' '#1055#1088#1072#1094#1102#1101
     TabOrder = 8
+    OnClick = chkWorkClick
   end
   object edtWork: TDBEditEh [21]
     Left = 120
@@ -493,6 +495,7 @@ inherited fmPationEdit: TfmPationEdit
     DataSource = dsTablets
     VisibleButtons = [nbInsert, nbDelete]
     TabOrder = 14
+    OnClick = nvTabletsClick
   end
   object nvSick: TDBNavigator [27]
     Left = 384
@@ -502,6 +505,7 @@ inherited fmPationEdit: TfmPationEdit
     DataSource = dsSick
     VisibleButtons = [nbInsert, nbDelete]
     TabOrder = 15
+    OnClick = nvSickClick
   end
   object nvRisk: TDBNavigator [28]
     Left = 720
@@ -511,6 +515,7 @@ inherited fmPationEdit: TfmPationEdit
     DataSource = dsRisk
     VisibleButtons = [nbInsert, nbDelete]
     TabOrder = 16
+    OnClick = nvRiskClick
   end
   object nvAllergy: TDBNavigator [29]
     Left = 384
@@ -520,6 +525,7 @@ inherited fmPationEdit: TfmPationEdit
     DataSource = dsAllergy
     VisibleButtons = [nbInsert, nbDelete]
     TabOrder = 17
+    OnClick = nvAllergyClick
   end
   object tvPriyom: TTreeView [30]
     Left = 776
@@ -568,21 +574,25 @@ inherited fmPationEdit: TfmPationEdit
     Top = 544
   end
   object zqrSick: TZQuery
+    UpdateObject = zuqSick
     Params = <>
-    Left = 320
+    Left = 288
     Top = 400
   end
   object zqrRisk: TZQuery
+    UpdateObject = zuqRisk
     Params = <>
     Left = 640
     Top = 408
   end
   object zqrAllergy: TZQuery
+    UpdateObject = zuqAllergy
     Params = <>
     Left = 320
     Top = 552
   end
   object zqrTablets: TZQuery
+    UpdateObject = zuqTablets
     Params = <>
     Left = 616
     Top = 544
@@ -596,5 +606,25 @@ inherited fmPationEdit: TfmPationEdit
     DataSet = zqrHistory
     Left = 912
     Top = 168
+  end
+  object zuqSick: TZUpdateSQL
+    UseSequenceFieldForRefreshSQL = False
+    Left = 344
+    Top = 400
+  end
+  object zuqRisk: TZUpdateSQL
+    UseSequenceFieldForRefreshSQL = False
+    Left = 704
+    Top = 416
+  end
+  object zuqAllergy: TZUpdateSQL
+    UseSequenceFieldForRefreshSQL = False
+    Left = 384
+    Top = 560
+  end
+  object zuqTablets: TZUpdateSQL
+    UseSequenceFieldForRefreshSQL = False
+    Left = 696
+    Top = 552
   end
 end

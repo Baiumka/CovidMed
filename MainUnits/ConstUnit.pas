@@ -369,10 +369,13 @@ const
 // Справочники
   RFR_ALL = 0;
   RFR_OBLAST = 1;
+  RFR_PNEV = 1;
 
   KW_OBLAST = 'OblastKey';
+  KW_PNEV = 'PnevKey';
 
   QR_OBLAST_NAME = 'SELECT id, name FROM ' + SCHEME_NAME + '.oblast';
+  QR_PNEV_NAME = 'SELECT id, name FROM ' + SCHEME_NAME + '.pnev';
 
   DEF_LNG = 2;
 

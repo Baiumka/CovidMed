@@ -30,7 +30,10 @@ uses
   MedicalUnit in 'Units\MedicalUnit.pas' {fmMedical},
   PationEditUnit in 'Units\PationEditUnit.pas' {fmPationEdit},
   SicksUnit in 'Units\SicksUnit.pas' {fmSicks},
-  RiskUnit in 'Units\RiskUnit.pas' {fmRisk};
+  RiskUnit in 'Units\RiskUnit.pas' {fmRisk},
+  SelectRiskUnit in 'Units\SelectRiskUnit.pas' {fmSelectRisk},
+  SelectSickUnit in 'Units\SelectSickUnit.pas' {fmSelectSick},
+  SelectMedicalUnit in 'Units\SelectMedicalUnit.pas' {fmSelectMedical};
 
 {$R *.res}
 

@@ -70,7 +70,7 @@ begin
        begin
          a_id := zqrHistory.FieldByName('ask_id').AsInteger;
          headNode := TTreeNode.Create(tvTree.Items);
-         nodeText := 'Звернення №' + IntToStr(a_id) + ' Дата: ' + DateToStr(zqrHistory.FieldByName('ask_date').AsDateTime);
+         nodeText := 'Випадок №' + IntToStr(a_id) + ' Дата: ' + DateToStr(zqrHistory.FieldByName('ask_date').AsDateTime);
          askNode := tvTree.Items.Add(headNode, nodeText);
        end;
 
@@ -81,10 +81,10 @@ begin
        tvTree.Items.AddChild(priNode, nodeText);
        nodeText := 'Скарги: ' + zqrHistory.FieldByName('pri_trouble').AsString;
        tvTree.Items.AddChild(priNode, nodeText);
-       nodeText := 'Лікування: ' + zqrHistory.FieldByName('pri_heal').AsString;
-       tvTree.Items.AddChild(priNode, nodeText);
-       nodeText := 'Результат: ' + zqrHistory.FieldByName('pri_result').AsString;
-       tvTree.Items.AddChild(priNode, nodeText);
+       //nodeText := 'Лікування: ' + zqrHistory.FieldByName('pri_heal').AsString;
+       //tvTree.Items.AddChild(priNode, nodeText);
+       //nodeText := 'Результат: ' + zqrHistory.FieldByName('pri_result').AsString;
+       //tvTree.Items.AddChild(priNode, nodeText);
 
        zqrHistory.Next;
      end;

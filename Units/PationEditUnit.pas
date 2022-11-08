@@ -6,7 +6,8 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ClientUnit, ImgList, ActnList, StdCtrls, Mask, DBCtrlsEh,
   Buttons, ExtCtrls, Grids, DBGridEh, DBCtrls, DB, ZAbstractRODataset,
-  ZAbstractDataset, ZDataset, ConstUnit, ComCtrls;
+  ZAbstractDataset, ZDataset, ConstUnit, ComCtrls, SelectSickUnit,
+  ZSqlUpdate, SelectMedicalUnit, SelectRiskUnit;
 
 type
   TfmPationEdit = class(TfmSimpleClient)
@@ -64,9 +65,19 @@ type
     lbl16: TLabel;
     zqrHistory: TZQuery;
     dsHistory: TDataSource;
+    zuqSick: TZUpdateSQL;
+    zuqRisk: TZUpdateSQL;
+    zuqAllergy: TZUpdateSQL;
+    zuqTablets: TZUpdateSQL;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure edtBirthdayChange(Sender: TObject);
+    procedure nvSickClick(Sender: TObject; Button: TNavigateBtn);
+    procedure nvRiskClick(Sender: TObject; Button: TNavigateBtn);
+    procedure nvAllergyClick(Sender: TObject; Button: TNavigateBtn);
+    procedure nvTabletsClick(Sender: TObject; Button: TNavigateBtn);
+    procedure btnSaveClick(Sender: TObject);
+    procedure chkWorkClick(Sender: TObject);
   private
     { Private declarations }
     editID: Integer;
@@ -138,18 +149,24 @@ begin
     zqrSick.SQL.Text := 'SELECT p.id, s.code, s.name FROM ' + SCHEME_NAME +'.pation_sick p, ' + SCHEME_NAME +'.sicks s WHERE p.id_pation = :id AND p.id_sick = s.id';
     zqrSick.ParamByName('id').AsInteger := editID;
     FMaster.GetData(zqrSick);
+    zuqSick.DeleteSQL.Text := 'DELETE FROM ' + SCHEME_NAME +'.pation_sick s WHERE s.id = :id;';
 
     zqrRisk.SQL.Text := 'SELECT p.id, s.name FROM ' + SCHEME_NAME +'.pation_risk p, ' + SCHEME_NAME +'.risk s WHERE p.id_pation = :id AND p.id_risk = s.id';
     zqrRisk.ParamByName('id').AsInteger := editID;
     FMaster.GetData(zqrRisk);
+    zuqRisk.DeleteSQL.Text := 'DELETE FROM ' + SCHEME_NAME +'.pation_risk s WHERE s.id = :id;';
+
 
     zqrAllergy.SQL.Text := 'SELECT p.id, s.code, s.name FROM ' + SCHEME_NAME +'.pation_allergy p, ' + SCHEME_NAME +'.medical s WHERE p.id_pation = :id AND p.id_medical = s.id';
     zqrAllergy.ParamByName('id').AsInteger := editID;
     FMaster.GetData(zqrAllergy);
+    zuqAllergy.DeleteSQL.Text := 'DELETE FROM ' + SCHEME_NAME +'.pation_allergy s WHERE s.id = :id;';
+
 
     zqrTablets.SQL.Text := 'SELECT p.id, s.code, s.name FROM ' + SCHEME_NAME +'.pation_medical p, ' + SCHEME_NAME +'.medical s WHERE p.id_pation = :id AND p.id_medical = s.id';
     zqrTablets.ParamByName('id').AsInteger := editID;
     FMaster.GetData(zqrTablets);
+    zuqTablets.DeleteSQL.Text := 'DELETE FROM ' + SCHEME_NAME +'.pation_medical s WHERE s.id = :id;';
 
     zqrHistory.SQL.Text := 'SELECT * FROM ' + SCHEME_NAME +'.p_get_pation_history(:id_pation);';
     zqrHistory.ParamByName('id_pation').AsInteger := editID;
@@ -172,6 +189,105 @@ begin
     dmGlobalData.LoadFromCashKeyItem(KW_OBLAST, QR_OBLAST_NAME, cbOblast, False);
   end;
 
+
+end;
+
+procedure TfmPationEdit.nvSickClick(Sender: TObject; Button: TNavigateBtn);
+var
+    dwSelectSick: TfmSelectSick;
+begin
+  if Button = nbInsert then
+  begin
+     dwSelectSick := TfmSelectSick.Create(Self);
+     dwSelectSick.ShowModal;
+     if dwSelectSick.ModalResult = mrOk then
+     begin
+          dmGlobalData.zqrAny.SQL.Text := 'INSERT INTO ' + SCHEME_NAME +'.pation_sick (id_pation, id_sick) VALUES (:id_pation, :id_sick);';
+          dmGlobalData.zqrAny.ParamByName('id_pation').AsInteger := zqrPation.FieldByName('id').AsInteger;
+          dmGlobalData.zqrAny.ParamByName('id_sick').AsInteger := dwSelectSick.selectedID;
+          FMaster.GetData(dmGlobalData.zqrAny, false);
+          zqrSick.Refresh;
+     end;
+     Abort();
+  end;
+end;
+
+procedure TfmPationEdit.nvRiskClick(Sender: TObject; Button: TNavigateBtn);
+var
+    dwSelectRisk: TfmSelectRisk;
+begin
+  if Button = nbInsert then
+  begin
+     dwSelectRisk := TfmSelectRisk.Create(Self);
+     dwSelectRisk.ShowModal;
+     if dwSelectRisk.ModalResult = mrOk then
+     begin
+          dmGlobalData.zqrAny.SQL.Text := 'INSERT INTO ' + SCHEME_NAME +'.pation_risk (id_pation, id_risk) VALUES (:id_pation, :id_risk);';
+          dmGlobalData.zqrAny.ParamByName('id_pation').AsInteger := zqrPation.FieldByName('id').AsInteger;
+          dmGlobalData.zqrAny.ParamByName('id_risk').AsInteger := dwSelectRisk.selectedID;
+          FMaster.GetData(dmGlobalData.zqrAny, false);
+          zqrRisk.Refresh;
+     end;
+     Abort();
+  end;
+end;
+
+procedure TfmPationEdit.nvAllergyClick(Sender: TObject;
+  Button: TNavigateBtn);
+var
+    dwSelectMedical: TfmSelectMedical;
+begin
+  if Button = nbInsert then
+  begin
+     dwSelectMedical := TfmSelectMedical.Create(Self);
+     dwSelectMedical.ShowModal;
+     if dwSelectMedical.ModalResult = mrOk then
+     begin
+          dmGlobalData.zqrAny.SQL.Text := 'INSERT INTO ' + SCHEME_NAME +'.pation_allergy (id_pation, id_medical) VALUES (:id_pation, :id_medical);';
+          dmGlobalData.zqrAny.ParamByName('id_pation').AsInteger := zqrPation.FieldByName('id').AsInteger;
+          dmGlobalData.zqrAny.ParamByName('id_medical').AsInteger := dwSelectMedical.selectedID;
+          FMaster.GetData(dmGlobalData.zqrAny, false);
+          zqrAllergy.Refresh;
+     end;
+     Abort();
+  end;
+end;
+
+procedure TfmPationEdit.nvTabletsClick(Sender: TObject;
+  Button: TNavigateBtn);
+var
+    dwSelectMedical: TfmSelectMedical;
+begin
+  if Button = nbInsert then
+  begin
+     dwSelectMedical := TfmSelectMedical.Create(Self);
+     dwSelectMedical.ShowModal;
+     if dwSelectMedical.ModalResult = mrOk then
+     begin
+          dmGlobalData.zqrAny.SQL.Text := 'INSERT INTO ' + SCHEME_NAME +'.pation_medical (id_pation, id_medical) VALUES (:id_pation, :id_medical);';
+          dmGlobalData.zqrAny.ParamByName('id_pation').AsInteger := zqrPation.FieldByName('id').AsInteger;
+          dmGlobalData.zqrAny.ParamByName('id_medical').AsInteger := dwSelectMedical.selectedID;
+          FMaster.GetData(dmGlobalData.zqrAny, false);
+          zqrTablets.Refresh;
+     end;
+     Abort();
+  end;
+end;
+
+procedure TfmPationEdit.btnSaveClick(Sender: TObject);
+begin
+  if rbMale.Checked then zqrPation.FieldByName('sex').AsInteger := 1;
+  if rbFemale.Checked then zqrPation.FieldByName('sex').AsInteger := 2;
+  zqrPation.FieldByName('is_work').AsBoolean := chkWork.Checked;
+  if chkWork.Checked then zqrPation.FieldByName('work').AsString := '';
+  zqrPation.CommitUpdates;
+
+
+end;
+
+procedure TfmPationEdit.chkWorkClick(Sender: TObject);
+begin
+  edtWork.Enabled := not chkWork.Checked;
 
 end;
 

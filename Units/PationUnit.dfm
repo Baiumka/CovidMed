@@ -44,17 +44,17 @@ inherited fmPationUnit: TfmPationUnit
       end
       item
         EditButtons = <>
-        FieldName = 'phone'
+        FieldName = 'birth_date'
         Footers = <>
-        Title.Caption = #1058#1077#1083#1077#1092#1086#1085
-        Title.TitleButton = True
+        Title.Caption = #1044#1072#1090#1072' '#1085#1072#1088#1086#1076#1078#1077#1085#1085#1103
         Width = 100
       end
       item
         EditButtons = <>
-        FieldName = 'reg_date'
+        FieldName = 'phone'
         Footers = <>
-        Title.Caption = #1044#1072#1090#1072' '#1088#1077#1108#1089#1090#1088#1072#1094#1110#1111
+        Title.Caption = #1058#1077#1083#1077#1092#1086#1085
+        Title.TitleButton = True
         Width = 100
       end>
   end

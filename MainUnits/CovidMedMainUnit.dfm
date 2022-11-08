@@ -1,9 +1,13 @@
 inherited fmCovidMedMain: TfmCovidMedMain
   Left = 368
   Top = 145
-  Width = 1134
-  Height = 655
-  Caption = #1047#1072#1082#1072#1079' - '#1053#1072#1088#1103#1076
+  HorzScrollBar.Range = 0
+  VertScrollBar.Range = 0
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'Covid Med v 1.0'
+  ClientHeight = 596
+  ClientWidth = 1118
   Constraints.MinHeight = 0
   Constraints.MinWidth = 0
   PixelsPerInch = 96
