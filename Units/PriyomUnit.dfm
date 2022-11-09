@@ -1,6 +1,6 @@
 inherited fmPriyom: TfmPriyom
-  Left = 555
-  Top = 278
+  Left = 758
+  Top = 303
   Caption = #1055#1088#1080#1081#1086#1084
   PixelsPerInch = 96
   TextHeight = 13
@@ -37,7 +37,7 @@ inherited fmPriyom: TfmPriyom
     Top = 72
     Width = 89
     Height = 353
-    Anchors = [akLeft, akTop, akRight]
+    Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = #1055#1086#1087#1077#1088#1077#1076#1085#1110' '#1087#1088#1080#1081#1086#1084#1080
     Enabled = False
     Font.Charset = DEFAULT_CHARSET
@@ -56,7 +56,7 @@ inherited fmPriyom: TfmPriyom
       Top = 16
       Width = 73
       Height = 329
-      Anchors = [akLeft, akTop, akRight]
+      Anchors = [akLeft, akTop, akRight, akBottom]
       Indent = 19
       TabOrder = 0
     end
@@ -66,7 +66,7 @@ inherited fmPriyom: TfmPriyom
     Top = 432
     Width = 761
     Height = 25
-    Anchors = [akLeft, akTop, akRight]
+    Anchors = [akLeft, akRight, akBottom]
     Caption = #1047#1072#1074#1077#1088#1096#1080#1090#1080' '#1087#1088#1080#1081#1086#1084
     Enabled = False
     TabOrder = 3
@@ -79,7 +79,8 @@ inherited fmPriyom: TfmPriyom
     Top = 72
     Width = 665
     Height = 353
-    ActivePage = tsAnames
+    ActivePage = tsHeal
+    Anchors = [akLeft, akTop, akBottom]
     Enabled = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -249,6 +250,9 @@ inherited fmPriyom: TfmPriyom
     object tsAnames: TTabSheet
       Caption = #1040#1085#1072#1084#1079#1077#1079' '#1087#1072#1094#1110#1108#1085#1090#1072
       ImageIndex = 1
+      DesignSize = (
+        657
+        325)
       object lbl6: TLabel
         Left = 16
         Top = 16
@@ -371,18 +375,20 @@ inherited fmPriyom: TfmPriyom
         TabOrder = 5
         Visible = True
       end
-      object dbgSympt: TDBGridEh
+      object dbgOznaki: TDBGridEh
         Left = 8
         Top = 112
-        Width = 617
+        Width = 609
         Height = 97
+        Anchors = [akLeft, akTop, akBottom]
+        DataSource = dsOznaki
         FooterColor = clWindow
         FooterFont.Charset = DEFAULT_CHARSET
         FooterFont.Color = clWindowText
         FooterFont.Height = -11
         FooterFont.Name = 'MS Sans Serif'
         FooterFont.Style = [fsBold]
-        Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs]
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect]
         OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghDialogColumnEdit, dghNoColumnMove]
         ReadOnly = True
         TabOrder = 6
@@ -395,10 +401,11 @@ inherited fmPriyom: TfmPriyom
           item
             Alignment = taCenter
             EditButtons = <>
+            FieldName = 'name'
             Footers = <>
             Title.Alignment = taCenter
             Title.Caption = #1057#1080#1084#1087#1090#1086#1084#1072#1090#1080#1095#1085#1110' '#1086#1079#1085#1072#1082#1080
-            Width = 380
+            Width = 570
           end>
       end
       object dbgSick: TDBGridEh
@@ -406,13 +413,15 @@ inherited fmPriyom: TfmPriyom
         Top = 216
         Width = 297
         Height = 105
+        Anchors = [akLeft, akBottom]
+        DataSource = dsSick
         FooterColor = clWindow
         FooterFont.Charset = DEFAULT_CHARSET
         FooterFont.Color = clWindowText
         FooterFont.Height = -11
         FooterFont.Name = 'MS Sans Serif'
         FooterFont.Style = [fsBold]
-        Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs]
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect]
         OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghDialogColumnEdit, dghNoColumnMove]
         ReadOnly = True
         TabOrder = 7
@@ -424,23 +433,26 @@ inherited fmPriyom: TfmPriyom
         Columns = <
           item
             EditButtons = <>
+            FieldName = 'name'
             Footers = <>
             Title.Caption = #1057#1091#1087#1091#1090#1085#1110' '#1079#1072#1093#1074#1086#1088#1102#1074#1072#1085#1085#1103
-            Width = 160
+            Width = 250
           end>
       end
       object dbgRisk: TDBGridEh
-        Left = 360
+        Left = 344
         Top = 216
-        Width = 265
+        Width = 273
         Height = 105
+        Anchors = [akLeft, akBottom]
+        DataSource = dsRisk
         FooterColor = clWindow
         FooterFont.Charset = DEFAULT_CHARSET
         FooterFont.Color = clWindowText
         FooterFont.Height = -11
         FooterFont.Name = 'MS Sans Serif'
         FooterFont.Style = [fsBold]
-        Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs]
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect]
         OptionsEh = [dghFixed3D, dghHighlightFocus, dghClearSelection, dghDialogFind, dghDialogColumnEdit, dghNoColumnMove]
         ReadOnly = True
         TabOrder = 8
@@ -452,10 +464,69 @@ inherited fmPriyom: TfmPriyom
         Columns = <
           item
             EditButtons = <>
+            FieldName = 'name'
             Footers = <>
             Title.Caption = #1060#1072#1082#1090#1086#1088#1080' '#1088#1080#1079#1080#1082#1091
-            Width = 160
+            Width = 230
           end>
+      end
+      object btnAddOznaki: TButton
+        Left = 620
+        Top = 112
+        Width = 27
+        Height = 25
+        Caption = '+'
+        TabOrder = 9
+        OnClick = btnAddOznakiClick
+      end
+      object btnDelOznaki: TButton
+        Left = 620
+        Top = 138
+        Width = 27
+        Height = 25
+        Caption = '-'
+        TabOrder = 10
+        OnClick = btnDelOznakiClick
+      end
+      object btnAddSick: TButton
+        Left = 308
+        Top = 216
+        Width = 27
+        Height = 25
+        Anchors = [akLeft, akBottom]
+        Caption = '+'
+        TabOrder = 11
+        OnClick = btnAddSickClick
+      end
+      object btnAddRisk: TButton
+        Left = 620
+        Top = 216
+        Width = 27
+        Height = 25
+        Anchors = [akLeft, akBottom]
+        Caption = '+'
+        TabOrder = 12
+        OnClick = btnAddRiskClick
+      end
+      object btnSickDel: TButton
+        Left = 308
+        Top = 242
+        Width = 27
+        Height = 25
+        Anchors = [akLeft, akBottom]
+        Caption = '-'
+        TabOrder = 13
+        OnClick = btnSickDelClick
+      end
+      object btnRiskDel: TButton
+        Left = 620
+        Top = 242
+        Width = 27
+        Height = 25
+        Anchors = [akLeft, akBottom]
+        Caption = '-'
+        TabOrder = 14
+        OnClick = btnRiskDelClick
       end
     end
     object tsResult: TTabSheet
@@ -494,9 +565,10 @@ inherited fmPriyom: TfmPriyom
         Top = 72
         Width = 433
         Height = 21
+        DataField = 'id_hard_level'
+        DataSource = dsPriyom
         EditButtons = <>
         TabOrder = 0
-        Text = 'cbHardLevel'
         Visible = True
       end
       object cbHospital: TDBComboBoxEh
@@ -504,9 +576,10 @@ inherited fmPriyom: TfmPriyom
         Top = 104
         Width = 433
         Height = 21
+        DataField = 'id_need_hospital'
+        DataSource = dsPriyom
         EditButtons = <>
         TabOrder = 1
-        Text = 'cbHospital'
         Visible = True
       end
       object edtResult: TDBEditEh
@@ -514,9 +587,15 @@ inherited fmPriyom: TfmPriyom
         Top = 8
         Width = 433
         Height = 21
-        EditButtons = <>
+        DataField = 'name'
+        DataSource = dsResult
+        EditButtons = <
+          item
+            Style = ebsEllipsisEh
+            OnClick = edtResultEditButtons0Click
+          end>
+        ReadOnly = True
         TabOrder = 2
-        Text = 'edtResult'
         Visible = True
       end
       object edtDopResult: TDBEditEh
@@ -524,9 +603,15 @@ inherited fmPriyom: TfmPriyom
         Top = 40
         Width = 433
         Height = 21
-        EditButtons = <>
+        DataField = 'name'
+        DataSource = dsDopResult
+        EditButtons = <
+          item
+            Style = ebsEllipsisEh
+            OnClick = edtDopResultEditButtons0Click
+          end>
+        ReadOnly = True
         TabOrder = 3
-        Text = 'edtDopResult'
         Visible = True
       end
     end
@@ -564,7 +649,7 @@ inherited fmPriyom: TfmPriyom
       object dbgHeal: TDBGridEh
         Left = 16
         Top = 32
-        Width = 320
+        Width = 625
         Height = 120
         FooterColor = clWindow
         FooterFont.Charset = DEFAULT_CHARSET
@@ -580,15 +665,25 @@ inherited fmPriyom: TfmPriyom
         TitleFont.Height = -11
         TitleFont.Name = 'MS Sans Serif'
         TitleFont.Style = [fsBold]
+        Columns = <
+          item
+            EditButtons = <>
+            FieldName = 'name'
+            Footers = <>
+            Title.Caption = #1053#1072#1079#1074#1072' '#1083#1110#1082#1086#1088#1089#1100#1082#1086#1075#1086' '#1079#1072#1089#1086#1073#1072
+            Title.TitleButton = True
+            Width = 580
+          end>
       end
       object edtDopHeal: TDBEditEh
         Left = 16
         Top = 176
         Width = 625
         Height = 21
+        DataField = 'dop_heal'
+        DataSource = dsPriyom
         EditButtons = <>
         TabOrder = 1
-        Text = 'edtDopHeal'
         Visible = True
       end
       object grpNext: TGroupBox
@@ -626,11 +721,31 @@ inherited fmPriyom: TfmPriyom
           Top = 11
           Width = 185
           Height = 21
+          DataField = 'next_date'
+          DataSource = dsPriyom
           EditButtons = <>
           Kind = dtkDateEh
           TabOrder = 2
           Visible = True
         end
+      end
+      object btnAddMedical: TButton
+        Left = 587
+        Top = 7
+        Width = 25
+        Height = 25
+        Caption = '+'
+        TabOrder = 3
+        OnClick = btnAddMedicalClick
+      end
+      object btnMedicalDel: TButton
+        Left = 614
+        Top = 7
+        Width = 25
+        Height = 25
+        Caption = '-'
+        TabOrder = 4
+        OnClick = btnMedicalDelClick
       end
     end
   end
@@ -686,12 +801,72 @@ inherited fmPriyom: TfmPriyom
   end
   object zqrHistory: TZQuery
     Params = <>
-    Left = 704
+    Left = 712
     Top = 168
   end
   object dsHistory: TDataSource
     DataSet = zqrHistory
     Left = 712
     Top = 216
+  end
+  object dsOznaki: TDataSource
+    DataSet = zqrOznaki
+    Left = 188
+    Top = 256
+  end
+  object zqrOznaki: TZQuery
+    Params = <>
+    Left = 252
+    Top = 256
+  end
+  object zqrSick: TZQuery
+    Params = <>
+    Left = 156
+    Top = 368
+  end
+  object zqrRisk: TZQuery
+    Params = <>
+    Left = 468
+    Top = 360
+  end
+  object dsSick: TDataSource
+    DataSet = zqrSick
+    Left = 196
+    Top = 368
+  end
+  object dsRisk: TDataSource
+    DataSet = zqrRisk
+    Left = 524
+    Top = 360
+  end
+  object zqrResult: TZQuery
+    Params = <>
+    Left = 116
+    Top = 144
+  end
+  object zqrDopResult: TZQuery
+    Params = <>
+    Left = 68
+    Top = 184
+  end
+  object dsDopResult: TDataSource
+    DataSet = zqrDopResult
+    Left = 148
+    Top = 192
+  end
+  object dsResult: TDataSource
+    DataSet = zqrResult
+    Left = 204
+    Top = 152
+  end
+  object dsMedical: TDataSource
+    DataSet = zqrMedical
+    Left = 492
+    Top = 192
+  end
+  object zqrMedical: TZQuery
+    Params = <>
+    Left = 564
+    Top = 192
   end
 end

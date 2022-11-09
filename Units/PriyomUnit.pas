@@ -6,7 +6,8 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ClientUnit, ImgList, ActnList, StdCtrls, Mask, DBCtrlsEh,
   Buttons, ExtCtrls, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, SelectPationUnit, ConstUnit,
-  ComCtrls, SimpleDialog, Grids, DBGridEh, DateUtils;
+  ComCtrls, SimpleDialog, Grids, DBGridEh, DateUtils, DBCtrls, SelectOznakiUnit, SelectRiskUnit, SelectSickUnit,
+  SelectMedicalUnit;
 
 type
   TfmPriyom = class(TfmSimpleClient)
@@ -50,7 +51,7 @@ type
     rbGypo: TRadioButton;
     rbGyper: TRadioButton;
     cbPnev: TDBComboBoxEh;
-    dbgSympt: TDBGridEh;
+    dbgOznaki: TDBGridEh;
     dbgSick: TDBGridEh;
     dbgRisk: TDBGridEh;
     tsResult: TTabSheet;
@@ -79,6 +80,26 @@ type
     edtNextDate: TDBDateTimeEditEh;
     lbl18: TLabel;
     lblDoc: TLabel;
+    dsOznaki: TDataSource;
+    zqrOznaki: TZQuery;
+    zqrSick: TZQuery;
+    zqrRisk: TZQuery;
+    dsSick: TDataSource;
+    dsRisk: TDataSource;
+    btnAddOznaki: TButton;
+    btnDelOznaki: TButton;
+    btnAddSick: TButton;
+    btnAddRisk: TButton;
+    btnSickDel: TButton;
+    btnRiskDel: TButton;
+    zqrResult: TZQuery;
+    zqrDopResult: TZQuery;
+    dsDopResult: TDataSource;
+    dsResult: TDataSource;
+    btnAddMedical: TButton;
+    btnMedicalDel: TButton;
+    dsMedical: TDataSource;
+    zqrMedical: TZQuery;
     procedure FormCreate(Sender: TObject);
     procedure edtFioEditButtons0Click(Sender: TObject;
       var Handled: Boolean);
@@ -89,6 +110,18 @@ type
     procedure edtBirthDateChange(Sender: TObject);
     procedure rbRepeatYesClick(Sender: TObject);
     procedure rbRepeatNoClick(Sender: TObject);
+    procedure btnAddOznakiClick(Sender: TObject);
+    procedure btnDelOznakiClick(Sender: TObject);
+    procedure btnAddSickClick(Sender: TObject);
+    procedure btnAddRiskClick(Sender: TObject);
+    procedure btnSickDelClick(Sender: TObject);
+    procedure btnRiskDelClick(Sender: TObject);
+    procedure edtResultEditButtons0Click(Sender: TObject;
+      var Handled: Boolean);
+    procedure edtDopResultEditButtons0Click(Sender: TObject;
+      var Handled: Boolean);
+    procedure btnAddMedicalClick(Sender: TObject);
+    procedure btnMedicalDelClick(Sender: TObject);
   private
     { Private declarations }
     procedure SavePriyom();
@@ -119,6 +152,7 @@ begin
 
   edtDate.Value := Date;
   RefreshReference(RFR_ALL);
+  pgcPriyom.ActivePage := tsPation;
 end;
 
 procedure TfmPriyom.RefreshReference(const ARef: integer);
@@ -126,6 +160,14 @@ begin
   if ARef in [RFR_ALL, RFR_PNEV] then
   begin
     dmGlobalData.LoadFromCashKeyItem(KW_PNEV, QR_PNEV_NAME, cbPnev, False);
+  end;
+  if ARef in [RFR_ALL, RFR_LEVEL] then
+  begin
+    dmGlobalData.LoadFromCashKeyItem(KW_LEVEL, QR_LEVEL_NAME, cbHardLevel, False);
+  end;
+  if ARef in [RFR_ALL, RFR_HOSPITAL] then
+  begin
+    dmGlobalData.LoadFromCashKeyItem(KW_HOSPITAL, QR_HOSPITAL_NAME, cbHospital, False);
   end;
 
 
@@ -272,6 +314,25 @@ begin
         rbGyper.Checked := true;
       end;
      end;
+    rbNextYes.Checked := zqrPriyom.FieldByName('is_next').AsBoolean;
+    rbNextNo.Checked := not zqrPriyom.FieldByName('is_next').AsBoolean;
+
+    zqrOznaki.SQL.Text := 'SELECT p.id, s.name FROM ' + SCHEME_NAME +'.priyom_oznaki p, ' + SCHEME_NAME +'.oznaki s WHERE p.id_priyom = :id AND p.id_oznaki = s.id';
+    zqrOznaki.ParamByName('id').AsInteger := zqrPriyom.FieldByName('id').AsInteger;
+    FMaster.GetData(zqrOznaki);
+
+    zqrSick.SQL.Text := 'SELECT p.id, s.code, s.name FROM ' + SCHEME_NAME +'.pation_sick p, ' + SCHEME_NAME +'.sicks s WHERE p.id_pation = :id AND p.id_sick = s.id';
+    zqrSick.ParamByName('id').AsInteger := zqrPation.FieldByName('id').AsInteger;
+    FMaster.GetData(zqrSick);
+
+    zqrRisk.SQL.Text := 'SELECT p.id, s.name FROM ' + SCHEME_NAME +'.pation_risk p, ' + SCHEME_NAME +'.risk s WHERE p.id_pation = :id AND p.id_risk = s.id';
+    zqrRisk.ParamByName('id').AsInteger := zqrPation.FieldByName('id').AsInteger;;
+    FMaster.GetData(zqrRisk);
+
+    dmGlobalData.zqrAny.SQL.Text := 'SELECT fio FROM ' + SCHEME_NAME +'.users WHERE id = :id';
+    dmGlobalData.zqrAny.ParamByName('id').AsInteger := zqrPriyom.FieldByName('id_user').AsInteger;
+    FMaster.GetData(dmGlobalData.zqrAny);
+    lblDoc.Caption := dmGlobalData.zqrAny.FieldByName('fio').AsString;
   end;
 
 end;
@@ -290,6 +351,134 @@ end;
 procedure TfmPriyom.rbRepeatNoClick(Sender: TObject);
 begin
   grpBad.Visible := rbRepeatYes.Checked;
+end;
+
+procedure TfmPriyom.btnAddOznakiClick(Sender: TObject);
+var
+    dwSelectOznaki: TfmSelectOznaki;
+begin
+     dwSelectOznaki := TfmSelectOznaki.Create(Self);
+     dwSelectOznaki.ShowModal;
+     if dwSelectOznaki.ModalResult = mrOk then
+     begin
+          dmGlobalData.zqrAny.SQL.Text := 'INSERT INTO ' + SCHEME_NAME +'.priyom_oznaki (id_priyom, id_oznaki) VALUES (:id_priyom, :id_oznaki);';
+          dmGlobalData.zqrAny.ParamByName('id_priyom').AsInteger := zqrPriyom.FieldByName('id').AsInteger;
+          dmGlobalData.zqrAny.ParamByName('id_oznaki').AsInteger := dwSelectOznaki.selectedID;
+          FMaster.GetData(dmGlobalData.zqrAny, false);
+          zqrOznaki.Refresh;
+     end;
+end;
+
+procedure TfmPriyom.btnDelOznakiClick(Sender: TObject);
+begin
+   dmGlobalData.zqrAny.SQL.Text := 'DELETE FROM ' + SCHEME_NAME +'.priyom_oznaki WHERE id = :id;';
+   dmGlobalData.zqrAny.ParamByName('id').AsInteger := zqrOznaki.FieldByName('id').AsInteger;
+   FMaster.GetData(dmGlobalData.zqrAny, false);
+   zqrOznaki.Refresh;
+end;
+
+procedure TfmPriyom.btnAddSickClick(Sender: TObject);
+var
+    dwSelectSick: TfmSelectSick;
+begin
+     dwSelectSick := TfmSelectSick.Create(Self);
+     dwSelectSick.ShowModal;
+     if dwSelectSick.ModalResult = mrOk then
+     begin
+          dmGlobalData.zqrAny.SQL.Text := 'INSERT INTO ' + SCHEME_NAME +'.pation_sick (id_pation, id_sick) VALUES (:id_pation, :id_sick);';
+          dmGlobalData.zqrAny.ParamByName('id_pation').AsInteger := zqrPation.FieldByName('id').AsInteger;
+          dmGlobalData.zqrAny.ParamByName('id_sick').AsInteger := dwSelectSick.selectedID;
+          FMaster.GetData(dmGlobalData.zqrAny, false);
+          zqrSick.Refresh;
+     end;
+end;
+
+procedure TfmPriyom.btnAddRiskClick(Sender: TObject);
+var
+    dwSelectRisk: TfmSelectRisk;
+begin
+     dwSelectRisk := TfmSelectRisk.Create(Self);
+     dwSelectRisk.ShowModal;
+     if dwSelectRisk.ModalResult = mrOk then
+     begin
+          dmGlobalData.zqrAny.SQL.Text := 'INSERT INTO ' + SCHEME_NAME +'.pation_risk (id_pation, id_risk) VALUES (:id_pation, :id_risk);';
+          dmGlobalData.zqrAny.ParamByName('id_pation').AsInteger := zqrPation.FieldByName('id').AsInteger;
+          dmGlobalData.zqrAny.ParamByName('id_risk').AsInteger := dwSelectRisk.selectedID;
+          FMaster.GetData(dmGlobalData.zqrAny, false);
+          zqrRisk.Refresh;
+     end;
+end;
+
+procedure TfmPriyom.btnSickDelClick(Sender: TObject);
+begin
+  dmGlobalData.zqrAny.SQL.Text := 'DELETE FROM ' + SCHEME_NAME +'.pation_sick s WHERE s.id = :id;';
+  dmGlobalData.zqrAny.ParamByName('id').AsInteger := zqrSick.FieldByName('id').AsInteger;
+  FMaster.GetData(dmGlobalData.zqrAny, false);
+  zqrSick.Refresh;
+end;
+
+procedure TfmPriyom.btnRiskDelClick(Sender: TObject);
+begin
+  dmGlobalData.zqrAny.SQL.Text := 'DELETE FROM ' + SCHEME_NAME +'.pation_risk s WHERE s.id = :id;';
+  dmGlobalData.zqrAny.ParamByName('id').AsInteger := zqrRisk.FieldByName('id').AsInteger;
+  FMaster.GetData(dmGlobalData.zqrAny, false);
+  zqrRisk.Refresh;
+end;
+
+procedure TfmPriyom.edtResultEditButtons0Click(Sender: TObject;
+  var Handled: Boolean);
+var
+    dwSelectSick: TfmSelectSick;
+begin
+     dwSelectSick := TfmSelectSick.Create(Self);
+     dwSelectSick.ShowModal;
+     if dwSelectSick.ModalResult = mrOk then
+     begin
+          zqrResult.SQL.Text := 'SELECT * FROM ' + SCHEME_NAME +'.sicks WHERE id = :id';
+          zqrResult.ParamByName('id').AsInteger := dwSelectSick.selectedID;
+          FMaster.GetData(zqrResult);
+          //zqrPriyom.FieldByName('id_result').AsInteger := dwSelectSick.selectedID;
+     end;
+end;
+
+procedure TfmPriyom.edtDopResultEditButtons0Click(Sender: TObject;
+  var Handled: Boolean);
+var
+     dwSelectSick: TfmSelectSick;
+begin
+     dwSelectSick := TfmSelectSick.Create(Self);
+     dwSelectSick.ShowModal;
+     if dwSelectSick.ModalResult = mrOk then
+     begin
+          zqrDopResult.SQL.Text := 'SELECT * FROM ' + SCHEME_NAME +'.sicks WHERE id = :id';
+          zqrDopResult.ParamByName('id').AsInteger := dwSelectSick.selectedID;
+          FMaster.GetData(zqrDopResult);
+          //zqrPriyom.FieldByName('id_dop_result').AsInteger := dwSelectSick.selectedID;
+     end;
+end;
+
+procedure TfmPriyom.btnAddMedicalClick(Sender: TObject);
+var
+    dwSelectMedical: TfmSelectMedical;
+begin
+     dwSelectMedical := TfmSelectMedical.Create(Self);
+     dwSelectMedical.ShowModal;
+     if dwSelectMedical.ModalResult = mrOk then
+     begin
+          dmGlobalData.zqrAny.SQL.Text := 'INSERT INTO ' + SCHEME_NAME +'.priyom_medical (id_priyom, id_medical) VALUES (:id_priyom, :id_medical);';
+          dmGlobalData.zqrAny.ParamByName('id_priyom').AsInteger := zqrPation.FieldByName('id').AsInteger;
+          dmGlobalData.zqrAny.ParamByName('id_medical').AsInteger := dwSelectMedical.selectedID;
+          FMaster.GetData(dmGlobalData.zqrAny, false);
+          zqrMedical.Refresh;
+     end;
+end;
+
+procedure TfmPriyom.btnMedicalDelClick(Sender: TObject);
+begin
+  dmGlobalData.zqrAny.SQL.Text := 'DELETE FROM ' + SCHEME_NAME +'.priyom_medical s WHERE s.id = :id;';
+  dmGlobalData.zqrAny.ParamByName('id').AsInteger := zqrMedical.FieldByName('id').AsInteger;
+  FMaster.GetData(dmGlobalData.zqrAny, false);
+  zqrMedical.Refresh;
 end;
 
 end.

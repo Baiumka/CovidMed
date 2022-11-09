@@ -1,6 +1,6 @@
 inherited fmMedical: TfmMedical
-  Left = 985
-  Top = 349
+  Left = 654
+  Top = 392
   Caption = #1057#1087#1080#1089#1086#1082' '#1083#1110#1082#1072#1088#1089#1082#1110#1093' '#1079#1072#1089#1086#1073#1110#1074
   PixelsPerInch = 96
   TextHeight = 13

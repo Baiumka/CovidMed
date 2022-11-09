@@ -369,13 +369,19 @@ const
 // Справочники
   RFR_ALL = 0;
   RFR_OBLAST = 1;
-  RFR_PNEV = 1;
+  RFR_PNEV = 2;
+  RFR_LEVEL = 3;
+  RFR_HOSPITAL = 4;
 
   KW_OBLAST = 'OblastKey';
   KW_PNEV = 'PnevKey';
+  KW_LEVEL = 'LevelKey';
+  KW_HOSPITAL = 'HospitalKey';
 
   QR_OBLAST_NAME = 'SELECT id, name FROM ' + SCHEME_NAME + '.oblast';
   QR_PNEV_NAME = 'SELECT id, name FROM ' + SCHEME_NAME + '.pnev';
+  QR_LEVEL_NAME = 'SELECT id, name FROM ' + SCHEME_NAME + '.hard_level';
+  QR_HOSPITAL_NAME = 'SELECT id, name FROM ' + SCHEME_NAME + '.hospital';
 
   DEF_LNG = 2;
 
