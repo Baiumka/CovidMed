@@ -1,6 +1,6 @@
 inherited fmArchive: TfmArchive
-  Left = 499
-  Top = 228
+  Left = 342
+  Top = 423
   Caption = #1040#1088#1093#1110#1074' '#1055#1088#1080#1081#1086#1084#1110#1074
   PixelsPerInch = 96
   TextHeight = 13
@@ -51,7 +51,7 @@ inherited fmArchive: TfmArchive
         EditButtons = <>
         FieldName = 'result'
         Footers = <>
-        Title.Caption = #1056#1077#1079#1091#1083#1100#1090#1072#1090
+        Title.Caption = #1044#1110#1072#1075#1085#1086#1079
         Title.TitleButton = True
         Width = 200
       end

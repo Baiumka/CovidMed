@@ -1,6 +1,6 @@
 inherited fmPriyom: TfmPriyom
-  Left = 758
-  Top = 303
+  Left = 649
+  Top = 124
   Caption = #1055#1088#1080#1081#1086#1084
   PixelsPerInch = 96
   TextHeight = 13
@@ -90,6 +90,7 @@ inherited fmPriyom: TfmPriyom
     ParentFont = False
     TabOrder = 4
     Visible = False
+    OnChange = pgcPriyomChange
     object tsPation: TTabSheet
       Caption = #1044#1072#1085#1110' '#1093#1074#1086#1088#1086#1075#1086
       Font.Charset = DEFAULT_CHARSET
@@ -651,6 +652,7 @@ inherited fmPriyom: TfmPriyom
         Top = 32
         Width = 625
         Height = 120
+        DataSource = dsMedical
         FooterColor = clWindow
         FooterFont.Charset = DEFAULT_CHARSET
         FooterFont.Color = clWindowText
@@ -665,6 +667,7 @@ inherited fmPriyom: TfmPriyom
         TitleFont.Height = -11
         TitleFont.Name = 'MS Sans Serif'
         TitleFont.Style = [fsBold]
+        OnDrawColumnCell = dbgHealDrawColumnCell
         Columns = <
           item
             EditButtons = <>
