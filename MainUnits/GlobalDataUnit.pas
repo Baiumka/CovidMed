@@ -46,6 +46,7 @@ type
 
 var
   dmGlobalData: TdmGlobalData;
+  procedure Split(Delimiter: Char; Str: string; ListOfStrings: TStrings) ;
 
 implementation
 
@@ -53,6 +54,15 @@ implementation
 
 uses Forms, Math, ConstUnit, Variants, StrUtils, DBGridEh, DBCtrlsEh{,
      FileCtrl};
+
+procedure Split(Delimiter: Char; Str: string; ListOfStrings: TStrings) ;
+begin
+   ListOfStrings.Clear;
+   ListOfStrings.Delimiter       := Delimiter;
+  // ListOfStrings.StrictDelimiter := True; 
+   ListOfStrings.DelimitedText   := Str;
+end;
+
 
 procedure TdmGlobalData.FillTree(zqrHistory : TDataSet; tvTree: TTreeView);
 var

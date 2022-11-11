@@ -34,7 +34,8 @@ uses
   SelectRiskUnit in 'Units\SelectRiskUnit.pas' {fmSelectRisk},
   SelectSickUnit in 'Units\SelectSickUnit.pas' {fmSelectSick},
   SelectMedicalUnit in 'Units\SelectMedicalUnit.pas' {fmSelectMedical},
-  SelectOznakiUnit in 'Units\SelectOznakiUnit.pas' {fmSelectOznaki};
+  SelectOznakiUnit in 'Units\SelectOznakiUnit.pas' {fmSelectOznaki},
+  ShortPriyomUnit in 'Units\ShortPriyomUnit.pas' {fmShortPriyom};
 
 {$R *.res}
 
@@ -44,6 +45,7 @@ begin
   Application.CreateForm(TfmCovidMedMain, fmCovidMedMain);
   Application.CreateForm(TdmSimpleClient, dmSimpleClient);
   Application.CreateForm(TfmSelectOznaki, fmSelectOznaki);
+  Application.CreateForm(TfmShortPriyom, fmShortPriyom);
   if not dmSimpleClient.ConnectToServer then Exit;
 
   if ShowLoginForm then

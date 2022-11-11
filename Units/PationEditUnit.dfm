@@ -534,6 +534,7 @@ inherited fmPationEdit: TfmPationEdit
     Height = 569
     Indent = 19
     TabOrder = 18
+    OnDblClick = tvPriyomDblClick
   end
   inherited alBase: TActionList
     Left = 528

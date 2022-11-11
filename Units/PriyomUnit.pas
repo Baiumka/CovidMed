@@ -7,7 +7,7 @@ uses
   Dialogs, ClientUnit, ImgList, ActnList, StdCtrls, Mask, DBCtrlsEh,
   Buttons, ExtCtrls, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, SelectPationUnit, ConstUnit,
   ComCtrls, SimpleDialog, Grids, DBGridEh, DateUtils, DBCtrls, SelectOznakiUnit, SelectRiskUnit, SelectSickUnit,
-  SelectMedicalUnit;
+  SelectMedicalUnit, ShortPriyomUnit;
 
 type
   TfmPriyom = class(TfmSimpleClient)
@@ -125,6 +125,7 @@ type
     procedure pgcPriyomChange(Sender: TObject);
     procedure dbgHealDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumnEh; State: TGridDrawState);
+    procedure tvPriyomDblClick(Sender: TObject);
   private
     { Private declarations }
     function SavePriyom(): Boolean;
@@ -552,6 +553,7 @@ begin
      btnSave.Enabled := True;
      zqrHistory.ParamByName('id_pation').AsInteger := pationID;
      FMaster.GetData(zqrHistory);
+     tvPriyom.Items.Clear;
      dmGlobalData.FillTree(zqrHistory, tvPriyom);
      btnStart.Enabled := false;
      is_started := true;
@@ -773,6 +775,25 @@ begin
 
   dbgHeal.Canvas.Font.Color := clBlack;
   dbgHeal.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+end;
+
+procedure TfmPriyom.tvPriyomDblClick(Sender: TObject);
+var
+  kek: string;
+  outList: TStrings;
+  dwPriyom: TfmShortPriyom;
+begin
+  if Assigned(tvPriyom.Selected) then
+    if AnsiPos('Прийом', tvPriyom.Selected.Text) <> 0 then
+    begin
+      outList := TStringList.Create;
+      Split('№', tvPriyom.Selected.Text, outList);
+      Split(' ', outList[1], outList);
+      kek := outList[0];
+      dwPriyom := TfmShortPriyom.Create(Self, StrToInt(kek));
+      dwPriyom.ShowModal;
+    end;
+
 end;
 
 end.

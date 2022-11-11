@@ -7,7 +7,7 @@ uses
   Dialogs, ClientUnit, ImgList, ActnList, StdCtrls, Mask, DBCtrlsEh,
   Buttons, ExtCtrls, Grids, DBGridEh, DBCtrls, DB, ZAbstractRODataset,
   ZAbstractDataset, ZDataset, ConstUnit, ComCtrls, SelectSickUnit,
-  ZSqlUpdate, SelectMedicalUnit, SelectRiskUnit;
+  ZSqlUpdate, SelectMedicalUnit, SelectRiskUnit, ShortPriyomUnit;
 
 type
   TfmPationEdit = class(TfmSimpleClient)
@@ -78,6 +78,7 @@ type
     procedure nvTabletsClick(Sender: TObject; Button: TNavigateBtn);
     procedure btnSaveClick(Sender: TObject);
     procedure chkWorkClick(Sender: TObject);
+    procedure tvPriyomDblClick(Sender: TObject);
   private
     { Private declarations }
     editID: Integer;
@@ -289,6 +290,24 @@ procedure TfmPationEdit.chkWorkClick(Sender: TObject);
 begin
   edtWork.Enabled := not chkWork.Checked;
 
+end;
+
+procedure TfmPationEdit.tvPriyomDblClick(Sender: TObject);
+var
+  kek: string;
+  outList: TStrings;
+  dwPriyom: TfmShortPriyom;
+begin
+  if Assigned(tvPriyom.Selected) then
+    if AnsiPos('Прийом', tvPriyom.Selected.Text) <> 0 then
+    begin
+      outList := TStringList.Create;
+      Split('№', tvPriyom.Selected.Text, outList);
+      Split(' ', outList[1], outList);
+      kek := outList[0];
+      dwPriyom := TfmShortPriyom.Create(Self, StrToInt(kek));
+      dwPriyom.ShowModal;
+    end;
 end;
 
 end.

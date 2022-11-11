@@ -59,6 +59,7 @@ inherited fmPriyom: TfmPriyom
       Anchors = [akLeft, akTop, akRight, akBottom]
       Indent = 19
       TabOrder = 0
+      OnDblClick = tvPriyomDblClick
     end
   end
   object btnSave: TBitBtn [3]
