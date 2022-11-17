@@ -44,8 +44,6 @@ begin
   Application.Title := 'CovidMed v1.0.0';
   Application.CreateForm(TfmCovidMedMain, fmCovidMedMain);
   Application.CreateForm(TdmSimpleClient, dmSimpleClient);
-  Application.CreateForm(TfmSelectOznaki, fmSelectOznaki);
-  Application.CreateForm(TfmShortPriyom, fmShortPriyom);
   if not dmSimpleClient.ConnectToServer then Exit;
 
   if ShowLoginForm then
