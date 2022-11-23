@@ -69,6 +69,7 @@ type
     zuqRisk: TZUpdateSQL;
     zuqAllergy: TZUpdateSQL;
     zuqTablets: TZUpdateSQL;
+    btnPrintHistory: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure edtBirthdayChange(Sender: TObject);
@@ -79,6 +80,7 @@ type
     procedure btnSaveClick(Sender: TObject);
     procedure chkWorkClick(Sender: TObject);
     procedure tvPriyomDblClick(Sender: TObject);
+    procedure btnPrintHistoryClick(Sender: TObject);
   private
     { Private declarations }
     editID: Integer;
@@ -308,6 +310,11 @@ begin
       dwPriyom := TfmShortPriyom.Create(Self, StrToInt(kek));
       dwPriyom.ShowModal;
     end;
+end;
+
+procedure TfmPationEdit.btnPrintHistoryClick(Sender: TObject);
+begin
+  FMaster.Report.ShowReport('history', [zqrHistory]);
 end;
 
 end.

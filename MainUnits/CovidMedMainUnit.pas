@@ -17,6 +17,7 @@ type
     actMedical: TAction;
     actSicks: TAction;
     actRisk: TAction;
+    actAdmin: TAction;
     procedure actUsersExecute(Sender: TObject);
     procedure actPationsExecute(Sender: TObject);
     procedure actPriyomExecute(Sender: TObject);
@@ -24,6 +25,7 @@ type
     procedure actMedicalExecute(Sender: TObject);
     procedure actSicksExecute(Sender: TObject);
     procedure actRiskExecute(Sender: TObject);
+    procedure actAdminExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -38,7 +40,7 @@ var
 implementation
 
 uses  Math, PationUnit, PriyomUnit, ArchiveUnit, MedicalUnit, SicksUnit,
-  RiskUnit;
+  RiskUnit, AdminUnit;
 
 
 {$R *.dfm}
@@ -78,6 +80,11 @@ end;
 procedure TfmCovidMedMain.actRiskExecute(Sender: TObject);
 begin
   CreateAndShowChildForm(TForm(fmRisk), TfmRisk, TAction(Sender).Caption);
+end;
+
+procedure TfmCovidMedMain.actAdminExecute(Sender: TObject);
+begin
+  CreateAndShowChildForm(TForm(fmAdmin), TfmAdmin, TAction(Sender).Caption);
 end;
 
 end.

@@ -593,6 +593,7 @@ inherited fmPriyom: TfmPriyom
         EditButtons = <>
         TabOrder = 1
         Visible = True
+        OnChange = cbHospitalChange
       end
       object edtResult: TDBEditEh
         Left = 200
@@ -625,6 +626,15 @@ inherited fmPriyom: TfmPriyom
         ReadOnly = True
         TabOrder = 3
         Visible = True
+      end
+      object btnHospitalPrint: TButton
+        Left = 200
+        Top = 136
+        Width = 433
+        Height = 25
+        Caption = #1044#1088#1091#1082' '#1053#1072#1087#1088#1072#1074#1083#1077#1085#1085#1103' '#1085#1072' '#1075#1086#1089#1087#1110#1090#1072#1083#1110#1079#1072#1094#1110#1102
+        TabOrder = 4
+        OnClick = btnHospitalPrintClick
       end
     end
     object tsHeal: TTabSheet

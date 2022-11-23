@@ -101,6 +101,7 @@ type
     dsMedical: TDataSource;
     zqrMedical: TZQuery;
     btnPrintHistory: TButton;
+    btnHospitalPrint: TButton;
     procedure FormCreate(Sender: TObject);
     procedure edtFioEditButtons0Click(Sender: TObject;
       var Handled: Boolean);
@@ -128,6 +129,8 @@ type
       DataCol: Integer; Column: TColumnEh; State: TGridDrawState);
     procedure tvPriyomDblClick(Sender: TObject);
     procedure btnPrintHistoryClick(Sender: TObject);
+    procedure cbHospitalChange(Sender: TObject);
+    procedure btnHospitalPrintClick(Sender: TObject);
   private
     { Private declarations }
     function SavePriyom(): Boolean;
@@ -800,7 +803,19 @@ end;
 
 procedure TfmPriyom.btnPrintHistoryClick(Sender: TObject);
 begin
-  FMaster.Report.ShowReport('history', [zqrPriyom, zqrHistory])
+  FMaster.Report.ShowReport('history', [zqrHistory])
+end;
+
+procedure TfmPriyom.cbHospitalChange(Sender: TObject);
+begin
+  btnHospitalPrint.Visible := (cbHospital.Value >= 2)
+
+end;
+
+procedure TfmPriyom.btnHospitalPrintClick(Sender: TObject);
+begin
+   FMaster.Report.ShowReport('hospital', [zqrHistory])
+
 end;
 
 end.

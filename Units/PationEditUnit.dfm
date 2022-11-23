@@ -1,6 +1,6 @@
 inherited fmPationEdit: TfmPationEdit
-  Left = 396
-  Top = 169
+  Left = 113
+  Top = 125
   Width = 1138
   Height = 701
   Caption = #1050#1072#1088#1090#1082#1072' '#1087#1072#1094#1110#1108#1085#1090#1072
@@ -535,6 +535,15 @@ inherited fmPationEdit: TfmPationEdit
     Indent = 19
     TabOrder = 18
     OnDblClick = tvPriyomDblClick
+  end
+  object btnPrintHistory: TButton [31]
+    Left = 968
+    Top = 40
+    Width = 131
+    Height = 25
+    Caption = #1044#1088#1091#1082' '#1087#1077#1088#1077#1083#1110#1082#1091
+    TabOrder = 19
+    OnClick = btnPrintHistoryClick
   end
   inherited alBase: TActionList
     Left = 528
