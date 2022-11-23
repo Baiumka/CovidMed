@@ -100,6 +100,7 @@ type
     btnMedicalDel: TButton;
     dsMedical: TDataSource;
     zqrMedical: TZQuery;
+    btnPrintHistory: TButton;
     procedure FormCreate(Sender: TObject);
     procedure edtFioEditButtons0Click(Sender: TObject;
       var Handled: Boolean);
@@ -126,6 +127,7 @@ type
     procedure dbgHealDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumnEh; State: TGridDrawState);
     procedure tvPriyomDblClick(Sender: TObject);
+    procedure btnPrintHistoryClick(Sender: TObject);
   private
     { Private declarations }
     function SavePriyom(): Boolean;
@@ -794,6 +796,11 @@ begin
       dwPriyom.ShowModal;
     end;
 
+end;
+
+procedure TfmPriyom.btnPrintHistoryClick(Sender: TObject);
+begin
+  FMaster.Report.ShowReport('history', [zqrPriyom, zqrHistory])
 end;
 
 end.

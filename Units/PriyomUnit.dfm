@@ -1,6 +1,6 @@
 inherited fmPriyom: TfmPriyom
-  Left = 649
-  Top = 124
+  Left = 434
+  Top = 230
   Caption = #1055#1088#1080#1081#1086#1084
   PixelsPerInch = 96
   TextHeight = 13
@@ -55,11 +55,21 @@ inherited fmPriyom: TfmPriyom
       Left = 8
       Top = 16
       Width = 73
-      Height = 329
+      Height = 305
       Anchors = [akLeft, akTop, akRight, akBottom]
       Indent = 19
       TabOrder = 0
       OnDblClick = tvPriyomDblClick
+    end
+    object btnPrintHistory: TButton
+      Left = 10
+      Top = 324
+      Width = 71
+      Height = 25
+      Anchors = [akLeft, akRight, akBottom]
+      Caption = #1044#1088#1091#1082
+      TabOrder = 1
+      OnClick = btnPrintHistoryClick
     end
   end
   object btnSave: TBitBtn [3]
@@ -80,7 +90,7 @@ inherited fmPriyom: TfmPriyom
     Top = 72
     Width = 665
     Height = 353
-    ActivePage = tsHeal
+    ActivePage = tsPation
     Anchors = [akLeft, akTop, akBottom]
     Enabled = False
     Font.Charset = DEFAULT_CHARSET

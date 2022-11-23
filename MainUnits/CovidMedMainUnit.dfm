@@ -1,31 +1,31 @@
 inherited fmCovidMedMain: TfmCovidMedMain
-  Left = 368
-  Top = 145
+  Left = 249
+  Top = 144
   HorzScrollBar.Range = 0
   VertScrollBar.Range = 0
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Covid Med v 1.0'
-  ClientHeight = 596
-  ClientWidth = 1118
+  ClientHeight = 603
+  ClientWidth = 1025
   Constraints.MinHeight = 0
   Constraints.MinWidth = 0
   PixelsPerInch = 96
   TextHeight = 13
   inherited splConcole: TSplitter
-    Top = 535
-    Width = 1118
+    Top = 542
+    Width = 1025
   end
   inherited sbMain: TStatusBar
-    Top = 570
-    Width = 1118
+    Top = 577
+    Width = 1025
   end
   inherited dbgConsole: TDBGridEh
-    Top = 540
-    Width = 1118
+    Top = 547
+    Width = 1025
   end
   inherited tcChild: TTabControl
-    Width = 1118
+    Width = 1025
   end
   inherited edtCalcDate: TDBDateTimeEditEh
     EditFormat = 'DD/MM/YYYY'

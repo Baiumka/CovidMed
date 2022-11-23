@@ -87,7 +87,7 @@ begin
        nodeText := 'Прийом №' + IntToStr(zqrHistory.FieldByName('pri_id').AsInteger) + ' Дата: ' + DateToStr(zqrHistory.FieldByName('pri_date').AsDateTime);
        priNode := tvTree.Items.AddChild(askNode, nodeText);
 
-       nodeText := 'Лікар: ' + zqrHistory.FieldByName('doc_fio').AsString;
+       nodeText := 'Лікар: ' + NameCase(zqrHistory.FieldByName('doc_fio').AsString);
        tvTree.Items.AddChild(priNode, nodeText);
        nodeText := 'Скарги: ' + zqrHistory.FieldByName('pri_trouble').AsString;
        tvTree.Items.AddChild(priNode, nodeText);
