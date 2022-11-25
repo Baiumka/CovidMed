@@ -1,6 +1,6 @@
 inherited fmPriyom: TfmPriyom
-  Left = 434
-  Top = 230
+  Left = 274
+  Top = 220
   Caption = #1055#1088#1080#1081#1086#1084
   PixelsPerInch = 96
   TextHeight = 13
@@ -90,7 +90,7 @@ inherited fmPriyom: TfmPriyom
     Top = 72
     Width = 665
     Height = 353
-    ActivePage = tsPation
+    ActivePage = tsResult
     Anchors = [akLeft, akTop, akBottom]
     Enabled = False
     Font.Charset = DEFAULT_CHARSET
@@ -636,6 +636,14 @@ inherited fmPriyom: TfmPriyom
         TabOrder = 4
         OnClick = btnHospitalPrintClick
       end
+      object Button1: TButton
+        Left = 520
+        Top = 136
+        Width = 75
+        Height = 25
+        Caption = 'Button1'
+        TabOrder = 5
+      end
     end
     object tsHeal: TTabSheet
       Caption = #1051#1110#1082#1091#1074#1072#1085#1085#1103
@@ -892,5 +900,15 @@ inherited fmPriyom: TfmPriyom
     Params = <>
     Left = 564
     Top = 192
+  end
+  object zqrDoc: TZQuery
+    Params = <>
+    Left = 380
+    Top = 272
+  end
+  object dsDoc: TDataSource
+    DataSet = zqrDoc
+    Left = 372
+    Top = 328
   end
 end

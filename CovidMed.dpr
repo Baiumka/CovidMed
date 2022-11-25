@@ -36,7 +36,8 @@ uses
   SelectMedicalUnit in 'Units\SelectMedicalUnit.pas' {fmSelectMedical},
   SelectOznakiUnit in 'Units\SelectOznakiUnit.pas' {fmSelectOznaki},
   ShortPriyomUnit in 'Units\ShortPriyomUnit.pas' {fmShortPriyom},
-  AdminUnit in 'Units\AdminUnit.pas' {fmAdmin};
+  AdminUnit in 'Units\AdminUnit.pas' {fmAdmin},
+  InfoPrintUnit in 'Units\InfoPrintUnit.pas' {fmInfoPrintUnit};
 
 {$R *.res}
 

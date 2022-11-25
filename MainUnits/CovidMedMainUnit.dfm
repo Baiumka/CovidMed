@@ -1,6 +1,6 @@
 inherited fmCovidMedMain: TfmCovidMedMain
-  Left = 362
-  Top = 110
+  Left = 268
+  Top = 57
   HorzScrollBar.Range = 0
   VertScrollBar.Range = 0
   BorderIcons = [biSystemMenu, biMinimize]
@@ -76,6 +76,11 @@ inherited fmCovidMedMain: TfmCovidMedMain
       Category = '3_'#1050#1077#1088#1091#1074#1072#1085#1085#1103
       Caption = #1047#1072#1082#1083#1072#1076
       OnExecute = actAdminExecute
+    end
+    object actPrintInfo: TAction
+      Category = '4_'#1030#1085#1092#1086#1088#1084#1072#1094#1110#1081#1085#1080#1081' '#1083#1080#1089#1090#1086#1082
+      Caption = #1044#1088#1091#1082
+      OnExecute = actPrintInfoExecute
     end
   end
   inherited ilChildIcon: TImageList

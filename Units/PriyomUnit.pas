@@ -7,7 +7,7 @@ uses
   Dialogs, ClientUnit, ImgList, ActnList, StdCtrls, Mask, DBCtrlsEh,
   Buttons, ExtCtrls, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, SelectPationUnit, ConstUnit,
   ComCtrls, SimpleDialog, Grids, DBGridEh, DateUtils, DBCtrls, SelectOznakiUnit, SelectRiskUnit, SelectSickUnit,
-  SelectMedicalUnit, ShortPriyomUnit;
+  SelectMedicalUnit, ShortPriyomUnit, UtilsUnit;
 
 type
   TfmPriyom = class(TfmSimpleClient)
@@ -102,6 +102,9 @@ type
     zqrMedical: TZQuery;
     btnPrintHistory: TButton;
     btnHospitalPrint: TButton;
+    zqrDoc: TZQuery;
+    dsDoc: TDataSource;
+    Button1: TButton;
     procedure FormCreate(Sender: TObject);
     procedure edtFioEditButtons0Click(Sender: TObject;
       var Handled: Boolean);
@@ -814,8 +817,14 @@ end;
 
 procedure TfmPriyom.btnHospitalPrintClick(Sender: TObject);
 begin
-   FMaster.Report.ShowReport('hospital', [zqrHistory])
+  SavePriyom();
 
+  zqrDoc.SQL.Text := 'SELECT * FROM ' + SCHEME_NAME +'.users WHERE id = :id';
+  zqrDoc.ParamByName('id').AsInteger := zqrPriyom.FieldByName('id_user').AsInteger;
+  FMaster.GetData(zqrDoc);
+  dmGlobalData.zqrAny.SQL.Text := 'SELECT * FROM ' + SCHEME_NAME +'.zaklad WHERE id = 1';
+  FMaster.GetData(dmGlobalData.zqrAny);
+  FMaster.Report.ShowReport('hospital', [dmGlobalData.zqrAny,zqrDoc, zqrPation, zqrPriyom, zqrResult, zqrDopResult])
 end;
 
 end.
